@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Travesías de montaña</title>
+    <meta
+      name="viewport"
+      content="initial-scale=1,maximum-scale=1,user-scalable=no"
+    />
+    <link
+      href="https://api.mapbox.com/mapbox-gl-js/v3.14.0/mapbox-gl.css"
+      rel="stylesheet"
+    />
+    <script src="https://api.mapbox.com/mapbox-gl-js/v3.14.0/mapbox-gl.js"></script>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+      }
+      #map {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <script src="https://unpkg.com/@turf/turf@6/turf.min.js"></script>
+    <div id="map"></div>
+    <script>
+      mapboxgl.accessToken =
+        "pk.eyJ1IjoiZWxlbmFidWxlbnNlIiwiYSI6ImNtZHpqYjEyajBjamMya3NpMGF4b3UxcGkifQ.kSOACI53U1h7mKxMMMV5RQ";
+      (async () => {
+        // Crear el mapa con perspectiva inicial
+        const map = new mapboxgl.Map({
+          container: "map",
+          zoom: 10,
+          center: [-0.63986, 42.78841], //Actual location: Bisaurín
+          pitch: 65,
+          bearing: 100,
+          style: "mapbox://styles/mapbox/standard-satellite",
+          interactive: false,
+          hash: false,
+        });
+        // Cargar el track
+        const [pinRouteGeojson] = await Promise.all([
+          fetch("data/2025_camille_concatenado.geojson").then((r) => r.json()),
+          map.once("style.load"),
+        ]);
+
+        // Cargar y mostrar refugios
+        fetch("data/sendadecamille_refugios.geojson")
+          .then((r) => r.json())
+          .then((data) => {
+            map.addSource("refugios", { type: "geojson", data: data });
+            map.addLayer({
+              id: "refugios-layer",
+              type: "circle",
+              source: "refugios",
+              paint: {
+                "circle-radius": 6,
+                "circle-color": "red",
+                "circle-stroke-width": 1,
+                "circle-stroke-color": "#fff",
+              },
+            });
+            data.features.forEach((feature) => {
+              const coords = feature.geometry.coordinates;
+              const nombreRefugio =
+                feature.properties["Refugios de la Senda de Camille"] || "Desconocido";
+              new mapboxgl.Marker({ color: "red" })
+                .setLngLat(coords)
+                .setPopup(new mapboxgl.Popup().setText(`Refugio: ${nombreRefugio}`))
+                .addTo(map);
+            });
+          });
+
+        // Neblina y terreno
+        map.setFog({
+          range: [-0.5, 2],
+          color: "#def",
+          "high-color": "#def",
+          "space-color": "#def",
+        });
+        map.addSource("mapbox-dem", {
+          type: "raster-dem",
+          url: "mapbox://mapbox.terrain-rgb",
+          tileSize: 512,
+          maxzoom: 14,
+        });
+        map.setTerrain({ source: "mapbox-dem", exaggeration: 1.5 });
+
+        const pinRoute = pinRouteGeojson.features[0].geometry.coordinates;
+
+        // === Ajustar automáticamente la vista al track ===
+        const bounds = pinRoute.reduce(
+          (b, coord) => b.extend(coord),
+          new mapboxgl.LngLatBounds(pinRoute[0], pinRoute[0])
+        );
+        map.fitBounds(bounds, { padding: 50, duration: 0 });
+
+        // Volver a aplicar la perspectiva 3D original
+        map.setPitch(50);
+        map.setBearing(150);
+        // ===============================================
+
+        // Marker y popup
+        const popup = new mapboxgl.Popup({ closeButton: false });
+        const marker = new mapboxgl.Marker({
+          color: "red",
+          scale: 0.8,
+          draggable: false,
+          pitchAlignment: "auto",
+          rotationAlignment: "auto",
+        })
+          .setLngLat(pinRoute[0])
+          .setPopup(popup)
+          .addTo(map)
+          .togglePopup();
+
+        // Capa de línea con animación
+        map.addSource("line", {
+          type: "geojson",
+          lineMetrics: true,
+          data: "data/2025_camille_concatenado.geojson",
+        });
+        map.addLayer({
+          type: "line",
+          source: "line",
+          id: "line",
+          paint: {
+            "line-color": "red",
+            "line-width": 5,
+          },
+          layout: { "line-cap": "round", "line-join": "round" },
+        });
+
+        await map.once("idle");
+        const animationDuration = 30000;
+        const path = turf.lineString(pinRoute);
+        const pathDistance = turf.lineDistance(path);
+        let start;
+        function frame(time) {
+          if (!start) start = time;
+          const animationPhase = (time - start) / animationDuration;
+          if (animationPhase > 1) return;
+
+          const alongPath = turf.along(path, pathDistance * animationPhase).geometry.coordinates;
+          const lngLat = { lng: alongPath[0], lat: alongPath[1] };
+          const elevation = Math.floor(map.queryTerrainElevation(lngLat, { exaggerated: false }));
+
+          popup.setHTML("Altitud: " + elevation + "m<br/>");
+          marker.setLngLat(lngLat);
+
+          map.setPaintProperty("line", "line-gradient", [
+            "step",
+            ["line-progress"],
+            "red",
+            animationPhase,
+            "rgba(255,0,0,0)",
+          ]);
+
+          const rotation = 150 - animationPhase * 40.0;
+          map.setBearing(rotation % 360);
+          window.requestAnimationFrame(frame);
+        }
+        window.requestAnimationFrame(frame);
+      })();
+    </script>
+  </body>
+</html>

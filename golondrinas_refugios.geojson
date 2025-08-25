@@ -1,0 +1,37 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": { "Refugios Ruta de las Golondrinas": "Belagua" },
+      "geometry": {
+        "coordinates": [-0.8346827907817556, 42.944968493304714],
+        "type": "Point"
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "Refugios Ruta de las Golondrinas": "Linza" },
+      "geometry": {
+        "coordinates": [-0.7994168702722391, 42.89819198765923],
+        "type": "Point"
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "Refugios Ruta de las Golondrinas": "L'Abérouat" },
+      "geometry": {
+        "coordinates": [-0.6659213509113044, 42.95029574507953],
+        "type": "Point"
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "Refugios Ruta de las Golondrinas": "Jeandel" },
+      "geometry": {
+        "coordinates": [-0.7493016127239684, 42.9783450023354],
+        "type": "Point"
+      }
+    }
+  ]
+}
