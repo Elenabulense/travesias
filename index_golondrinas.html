@@ -46,12 +46,12 @@
 
         // Cargar el track
         const [pinRouteGeojson] = await Promise.all([
-          fetch("data/2021_golondrinas_concatenado.geojson").then((r) => r.json()),
+          fetch("2021_golondrinas_concatenado.geojson").then((r) => r.json()),
           map.once("style.load"),
         ]);
 
         // Cargar y mostrar refugios
-        fetch("data/golondrinas_refugios.geojson")
+        fetch("golondrinas_refugios.geojson")
           .then((r) => r.json())
           .then((data) => {
             map.addSource("refugios", { type: "geojson", data: data });
@@ -124,7 +124,7 @@
         map.addSource("line", {
           type: "geojson",
           lineMetrics: true,
-          data: "data/2021_golondrinas_concatenado.geojson",
+          data: "2021_golondrinas_concatenado.geojson",
         });
         map.addLayer({
           type: "line",

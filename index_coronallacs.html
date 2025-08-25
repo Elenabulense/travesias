@@ -45,12 +45,12 @@
         });
         // Cargar el track
         const [pinRouteGeojson] = await Promise.all([
-          fetch("data/2022_coronallacs_concatenado.geojson").then((r) => r.json()),
+          fetch("2022_coronallacs_concatenado.geojson").then((r) => r.json()),
           map.once("style.load"),
         ]);
 
         // Cargar y mostrar refugios
-        fetch("data/coronallacs_refugios.geojson")
+        fetch("coronallacs_refugios.geojson")
           .then((r) => r.json())
           .then((data) => {
             map.addSource("refugios", { type: "geojson", data: data });
@@ -123,7 +123,7 @@
         map.addSource("line", {
           type: "geojson",
           lineMetrics: true,
-          data: "data/2022_coronallacs_concatenado.geojson",
+          data: "2022_coronallacs_concatenado.geojson",
         });
         map.addLayer({
           type: "line",
