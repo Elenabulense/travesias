@@ -145,11 +145,14 @@
         padding: 0 1rem;
       }
       .final-card {
+        display: block; /* Para que <a> sea bloque */
         background-color: #ccc;
         padding: 1rem;
         text-align: left;
         border-radius: 8px;
         transition: background-color 0.3s ease;
+        text-decoration: none; /* quita subrayado */
+        color: inherit; /* mantiene color original */
       }
       .final-card:hover {
         background-color: goldenrod;
@@ -158,10 +161,6 @@
       .final-card h3 {
         margin: 0 0 0.5rem 0;
         font-size: 1.2rem;
-      }
-      .final-card h3 a {
-        color: inherit;
-        text-decoration: none;
       }
       .final-card img {
         width: 100%;
@@ -213,10 +212,7 @@
               <img src="carros_foc.png" />
               <figcaption>© Logotipo Carros</figcaption>
             </figure>
-            <p>
-              <strong>Julio de 2019</strong><br />Desnivel: 9200 m<br />Distancia:
-              65 km
-            </p>
+            <p><strong>Julio de 2019</strong><br>Desnivel: 9200 m<br>Distancia: 65 km</p>
             <ul>
               <li>Etapa 1. Restanca - Saboredo</li>
               <li>Etapa 2. Saboredo - Ernest Mallafré</li>
@@ -226,8 +222,8 @@
               <li>Etapa 6. Ventosa i Calvell - Restanca</li>
             </ul>
           </div>
-          <iframe class="mobile-map" src="index_carros.html"></iframe>
-          
+          <iframe class="mobile-map" data-src="index_carros.html"></iframe>
+
           <!-- Travesía 2 -->
           <div class="step" data-step="2">
             <h2>Ruta de las Golondrinas</h2>
@@ -235,10 +231,7 @@
               <img src="golondrinas.png" />
               <figcaption>© Logotipo Golondrinas</figcaption>
             </figure>
-            <p>
-              <strong>Septiembre 2021</strong><br />Desnivel: 7000 m<br />Distancia:
-              62 km
-            </p>
+            <p><strong>Septiembre 2021</strong><br>Desnivel: 7000 m<br>Distancia: 62 km</p>
             <ul>
               <li>Etapa 1. Belagua - Linza</li>
               <li>Etapa 2. Linza - Laberouat</li>
@@ -246,7 +239,7 @@
               <li>Etapa 4. Jeandel - Belagua</li>
             </ul>
           </div>
-          <iframe class="mobile-map" src="index_golondrinas.html"></iframe>
+          <iframe class="mobile-map" data-src="index_golondrinas.html"></iframe>
 
           <!-- Travesía 3 -->
           <div class="step" data-step="3">
@@ -255,39 +248,26 @@
               <img src="coronallacs.png" alt="Coronallacs" />
               <figcaption>© Logotipo Coronallacs</figcaption>
             </figure>
-            <p>
-              <strong>Julio de 2022</strong><br />
-              Desnivel: 6000 m<br />
-              Distancia: 92 km
-            </p>
+            <p><strong>Julio de 2022</strong><br>Desnivel: 6000 m<br>Distancia: 92 km</p>
             <p>Etapas:</p>
             <ul>
               <li>Etapa 1. Escaldes Engordany - Lilla</li>
               <li>Etapa 2. Lilla - Juclar</li>
               <li>Etapa 3. Juclar - Sorteny</li>
               <li>Etapa 4. Sorteny - Comapedrosa</li>
-              <li>
-                Etapa 5. Comapedrosa - Escaldes Engordany (último tramo en bus)
-              </li>
+              <li>Etapa 5. Comapedrosa - Escaldes Engordany (último tramo en bus)</li>
             </ul>
           </div>
-          <iframe class="mobile-map" src="index_coronallacs.html"></iframe>
+          <iframe class="mobile-map" data-src="index_coronallacs.html"></iframe>
 
           <!-- Travesía 4 -->
           <div class="step" data-step="4">
             <h2>Alta Ruta de los Perdidos</h2>
             <figure>
-              <img
-                src="perdidos.png"
-                alt="Logotipo Alta Ruta de los Perdidos"
-              />
+              <img src="perdidos.png" alt="Logotipo Alta Ruta de los Perdidos" />
               <figcaption>© Logotipo Alta Ruta de los Perdidos</figcaption>
             </figure>
-            <p>
-              <strong>Julio de 2023</strong><br />
-              Desnivel: 6500 m<br />
-              Distancia: 94 km
-            </p>
+            <p><strong>Julio de 2023</strong><br>Desnivel: 6500 m<br>Distancia: 94 km</p>
             <p>Etapas:</p>
             <ul>
               <li>Etapa 1. Bujaruelo - Góriz</li>
@@ -298,20 +278,16 @@
               <li>Etapa 6. Oulettes de Gaube - Bujaruelo</li>
             </ul>
           </div>
-          <iframe class="mobile-map" src="index_altaruta.html"></iframe>
+          <iframe class="mobile-map" data-src="index_altaruta.html"></iframe>
 
           <!-- Travesía 5 -->
-          <div class="step" data-step="4">
+          <div class="step" data-step="5">
             <h2>El Anillo de Picos</h2>
             <figure>
               <img src="anillo_picos.png" alt="Logotipo Anillo de Picos" />
               <figcaption>© Logotipo Anillo de Picos</figcaption>
             </figure>
-            <p>
-              <strong>Julio de 2024</strong><br />
-              Desnivel: 7000 m<br />
-              Distancia: 82 km
-            </p>
+            <p><strong>Julio de 2024</strong><br>Desnivel: 7000 m<br>Distancia: 82 km</p>
             <p>Etapas:</p>
             <ul>
               <li>Etapa 1. Poncebos - Vega de Ario</li>
@@ -322,23 +298,16 @@
               <li>Etapa 6. Urriellu - Poncebos (último tramo en funicular)</li>
             </ul>
           </div>
-          <iframe class="mobile-map" src="index_anillo.html"></iframe>
+          <iframe class="mobile-map" data-src="index_anillo.html"></iframe>
 
           <!-- Travesía 6 -->
-          <div class="step" data-step="4">
+          <div class="step" data-step="6">
             <h2>Senda de Camille</h2>
             <figure>
-              <img
-                src="senda_camille.png"
-                alt="Logotipo Senda de Camille"
-              />
+              <img src="senda_camille.png" alt="Logotipo Senda de Camille" />
               <figcaption>© Logotipo Senda de Camille</figcaption>
             </figure>
-            <p>
-              <strong>Julio de 2025</strong><br />
-              Desnivel: 8500 m<br />
-              Distancia: 129 km
-            </p>
+            <p><strong>Julio de 2025</strong><br>Desnivel: 8500 m<br>Distancia: 129 km</p>
             <p>Etapas:</p>
             <ul>
               <li>Etapa 1. Somport (Albergue de Aysa) - Arlet</li>
@@ -350,7 +319,7 @@
               <li>Etapa 7. Lízara - Somport</li>
             </ul>
           </div>
-          <iframe class="mobile-map" src="index_camille.html"></iframe>
+          <iframe class="mobile-map" data-src="index_camille.html"></iframe>
         </article>
 
         <figure class="graphic">
@@ -361,30 +330,30 @@
       <section id="outro">
         <h2>¿Y la próxima?</h2>
         <div class="final-cards">
-          <div class="final-card">
-            <h3><a href="https://www.tourdelaneto.com/">Tour del Aneto</a></h3>
+          <a class="final-card" href="https://www.tourdelaneto.com/">
+            <h3>Tour del Aneto</h3>
             <img src="tour_aneto.png" alt="Travesía 1">
             <figcaption>© Logotipo Tour del Aneto</figcaption>
             <p></p>
-          </div>
-          <div class="final-card">
-            <h3><a href="https://www.cavallsdelvent.com/">Cavalls del vent</a></h3>
+          </a>
+          <a class="final-card" href="https://www.cavallsdelvent.com/">
+            <h3>Cavalls del vent</h3>
             <img src="cavalls_del_vent.png" alt="Travesía 2">
             <figcaption>© Logotipo Cavalls del vent</figcaption>
             <p></p>
-          </div>
-          <div class="final-card">
-            <h3><a href="https://3000ibones.com/">3000 ibones</a></h3>
+          </a>
+          <a class="final-card" href="https://3000ibones.com/">
+            <h3>3000 ibones</h3>
             <img src="3000_ibones.png" alt="Travesía 3">
             <figcaption>© Logotipo 3000 ibones</figcaption>
             <p></p>
-          </div>
-          <div class="final-card">
-            <h3><a href="https://buffentrerefugios.com/">Entre refugios</a></h3>
+          </a>
+          <a class="final-card" href="https://buffentrerefugios.com/">
+            <h3>Entre refugios</h3>
             <img src="entre_refugios.png" alt="Travesía 4">
             <figcaption>© Logotipo Entre refugios</figcaption>
             <p></p>
-          </div>
+          </a>
         </div>
       </section>
     </main>
@@ -402,14 +371,23 @@
 
         function handleStepEnter(response) {
           step.classed("is-active", (d, i) => i === response.index);
+
           if (window.innerWidth > 768) {
-            const frame = document.getElementById("mapFrame");
-            if (response.index === 0) frame.src = "index_carros.html";
-            if (response.index === 1) frame.src = "index_golondrinas.html";
-            if (response.index === 2) frame.src = "index_coronallacs.html";
-            if (response.index === 3) frame.src = "index_altaruta.html";
-            if (response.index === 4) frame.src = "index_anillo.html";
-            if (response.index === 5) frame.src = "index_camille.html";
+            const urls = [
+              "index_carros.html",
+              "index_golondrinas.html",
+              "index_coronallacs.html",
+              "index_altaruta.html",
+              "index_anillo.html",
+              "index_camille.html"
+            ];
+            document.getElementById("mapFrame").src = urls[response.index];
+          } else {
+            const mobileIframes = document.querySelectorAll(".mobile-map");
+            const iframe = mobileIframes[response.index];
+            if (iframe && !iframe.src) {
+              iframe.src = iframe.dataset.src; // carga solo cuando toca
+            }
           }
         }
 

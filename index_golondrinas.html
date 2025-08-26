@@ -69,10 +69,13 @@
             data.features.forEach((feature) => {
               const coords = feature.geometry.coordinates;
               const nombreRefugio =
-                feature.properties["Refugios Ruta de las Golondrinas"] || "Desconocido";
+                feature.properties["Refugios Ruta de las Golondrinas"] ||
+                "Desconocido";
               new mapboxgl.Marker({ color: "red" })
                 .setLngLat(coords)
-                .setPopup(new mapboxgl.Popup().setText(`Refugio: ${nombreRefugio}`))
+                .setPopup(
+                  new mapboxgl.Popup().setText(`Refugio: ${nombreRefugio}`)
+                )
                 .addTo(map);
             });
           });
@@ -126,6 +129,8 @@
           lineMetrics: true,
           data: "2021_golondrinas_concatenado.geojson",
         });
+        await map.once("idle");
+
         map.addLayer({
           type: "line",
           source: "line",
@@ -137,7 +142,7 @@
           layout: { "line-cap": "round", "line-join": "round" },
         });
 
-        await map.once("idle");
+        // Animación
         const animationDuration = 30000;
         const path = turf.lineString(pinRoute);
         const pathDistance = turf.lineDistance(path);
@@ -147,9 +152,12 @@
           const animationPhase = (time - start) / animationDuration;
           if (animationPhase > 1) return;
 
-          const alongPath = turf.along(path, pathDistance * animationPhase).geometry.coordinates;
+          const alongPath = turf.along(path, pathDistance * animationPhase)
+            .geometry.coordinates;
           const lngLat = { lng: alongPath[0], lat: alongPath[1] };
-          const elevation = Math.floor(map.queryTerrainElevation(lngLat, { exaggerated: false }));
+          const elevation = Math.floor(
+            map.queryTerrainElevation(lngLat, { exaggerated: false })
+          );
 
           popup.setHTML("Altitud: " + elevation + "m<br/>");
           marker.setLngLat(lngLat);

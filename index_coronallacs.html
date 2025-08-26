@@ -36,7 +36,7 @@
         const map = new mapboxgl.Map({
           container: "map",
           zoom: 10,
-          center: [1.44936, 42.57900], //Actual location: Refugio Comapedrosa
+          center: [1.44936, 42.579], //Actual location: Refugio Comapedrosa
           pitch: 65,
           bearing: 100,
           style: "mapbox://styles/mapbox/standard-satellite",
@@ -71,7 +71,9 @@
                 feature.properties["Refugios de Coronallacs"] || "Desconocido";
               new mapboxgl.Marker({ color: "red" })
                 .setLngLat(coords)
-                .setPopup(new mapboxgl.Popup().setText(`Refugio: ${nombreRefugio}`))
+                .setPopup(
+                  new mapboxgl.Popup().setText(`Refugio: ${nombreRefugio}`)
+                )
                 .addTo(map);
             });
           });
@@ -119,12 +121,13 @@
           .addTo(map)
           .togglePopup();
 
-        // Capa de línea con animación
         map.addSource("line", {
           type: "geojson",
           lineMetrics: true,
           data: "2022_coronallacs_concatenado.geojson",
         });
+        await map.once("idle");
+
         map.addLayer({
           type: "line",
           source: "line",
@@ -136,7 +139,8 @@
           layout: { "line-cap": "round", "line-join": "round" },
         });
 
-        await map.once("idle");
+        // Animación
+
         const animationDuration = 30000;
         const path = turf.lineString(pinRoute);
         const pathDistance = turf.lineDistance(path);
@@ -146,9 +150,12 @@
           const animationPhase = (time - start) / animationDuration;
           if (animationPhase > 1) return;
 
-          const alongPath = turf.along(path, pathDistance * animationPhase).geometry.coordinates;
+          const alongPath = turf.along(path, pathDistance * animationPhase)
+            .geometry.coordinates;
           const lngLat = { lng: alongPath[0], lat: alongPath[1] };
-          const elevation = Math.floor(map.queryTerrainElevation(lngLat, { exaggerated: false }));
+          const elevation = Math.floor(
+            map.queryTerrainElevation(lngLat, { exaggerated: false })
+          );
 
           popup.setHTML("Altitud: " + elevation + "m<br/>");
           marker.setLngLat(lngLat);
