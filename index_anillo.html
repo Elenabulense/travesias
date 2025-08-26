@@ -123,6 +123,11 @@
           .togglePopup();
 
         // Capa de línea con animación
+        map.addSource("line", {
+          type: "geojson",
+          lineMetrics: true,
+          data: "2024_anillo_concatenado.geojson",
+        });
         await map.once("idle");
 
         map.addLayer({
